@@ -18,3 +18,19 @@ TODO: Record exact battery and buck parts, protection/fuse choice, wire and
 connector ratings, bulk capacitance, regulator temperature, and measured 5 V
 droop during servo startup/motion and carefully controlled stall tests.
 Size the buck from verified peak load, not average load alone.
+
+## Battery
+
+Final battery: TBD
+
+Initial bench testing may use:
+- 6 × AA alkaline cells in series (~9 V nominal), or
+- a current-limited laboratory DC supply.
+
+The final battery will be selected after measuring:
+- idle current
+- single-servo current
+- simultaneous three-servo current
+- transient/startup current
+- worst-case operating current
+- desired runtime
