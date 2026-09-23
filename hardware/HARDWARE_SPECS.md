@@ -19,7 +19,7 @@ This document should be updated whenever:
 
 | Subsystem | Current Part / Status | Confidence |
 |---|---|---|
-| Microcontroller | DOIT ESP32 DevKit V1; board-level reference identifies an ESP-WROOM-32 module | Board/model documentation now available; exact physical board/module marking still **REQUIRES PHYSICAL VERIFICATION** |
+| Microcontroller | ESP32 DevKit V1; board-level reference identifies an ESP-WROOM-32 module | Board/model documentation now available; exact physical board/module marking still **REQUIRES PHYSICAL VERIFICATION** |
 | EMG sensor | MyoWare 2.0 Muscle Sensor | Confirmed |
 | Servo motors | 3 × MG90S metal-gear micro servos | Confirmed model name; exact manufacturer not documented |
 | Servo PWM controller | PCA9685-based controller | PCA9685 IC confirmed by available datasheet; exact breakout-board implementation **TBD** |
@@ -61,7 +61,7 @@ Current planned architecture:
 
 ### Important ESP32 power-path update
 
-The newly added DOIT ESP32 DevKit V1 board reference states:
+The newly added ESP32 DevKit V1 board reference states:
 
 - the board can be powered from the onboard USB Micro-B connector or the `VIN` pin,
 - external supply operation is stated as **6 V to 20 V**,
@@ -74,7 +74,7 @@ Therefore, the previously planned connection:
 5 V buck output -> ESP32 VIN
 ```
 
-is **not supported by the currently available DOIT board-level reference** and must remain an open design issue.
+is **not supported by the currently available board-level reference** and must remain an open design issue.
 
 Do not assume that the board can be powered from the 5 V buck through `VIN` until one of the following is obtained:
 
@@ -103,18 +103,16 @@ The final grounding layout is **not yet validated on hardware**.
 ## 4.1 Current identification
 
 ### Planned development board
-**DOIT ESP32 DevKit V1**
+**ESP32 DevKit V1**
 
 ### Available board-level reference
-A board-level reference for the DOIT ESP32 DevKit V1 is now available.
+A board-level reference for the ESP32 DevKit V1 is now available.
 
 Source file:
 
 ```text
 hardware/datasheets/esp32_datasheet.pdf
 ```
-
-The document states that the DOIT ESP32 DevKit V1 was created by DOIT to evaluate the **ESP-WROOM-32** module.
 
 ### Available module-level reference
 The existing Espressif module datasheet remains useful for chip/module electrical details:
@@ -149,7 +147,7 @@ The board-level reference supports the current belief that the board uses an ESP
 
 ### Important document scope warning
 
-Only the portion of `esp32_datasheet.pdf` describing the **DOIT ESP32 DevKit V1** should be used for this project.
+Only the portion of `esp32_datasheet.pdf` describing the ** ESP32 DevKit V1** should be used for this project.
 
 The later portion of that PDF contains a separate **Joy-IT NodeMCU ESP32 manual**. Those NodeMCU pages describe a different development board and must **not** be used as specifications for the DOIT DevKit V1.
 
