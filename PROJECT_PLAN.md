@@ -38,16 +38,15 @@ The first version should be intentionally simple: use the MyoWare **ENV** output
 - Exact open/closed servo positions must be determined experimentally
 
 ### Servo Driver
-- External servo driver board planned
-- Exact board is TBD
+- PCA9685-based external servo controller planned
+- The PCA9685 IC is confirmed; the exact breakout-board implementation is TBD
 - The driver implementation should be isolated inside `servo_controller.*` so the rest of the firmware does not depend on a specific driver
 
 ### Power
-- 12 V DC battery
-- 12 V → approximately 5 V buck converter
-- 5 V rail supplies:
-  - ESP32 through its VIN/5V input
-  - servo power rail / servo driver power input
+- Final battery chemistry, voltage, and capacity are TBD
+- An LM2596-based buck converter is planned for the approximately 5 V servo rail; the exact module requires verification
+- The ESP32 power-input path is TBD. Do not assume that the approximately 5 V servo rail can power the DOIT DevKit through `VIN`; the available board reference recommends 7–12 V for external `VIN` operation
+- During development, the ESP32 may be powered through its onboard USB connector
 - ESP32 onboard regulator supplies 3.3 V to:
   - ESP32 logic
   - MyoWare sensor
@@ -58,23 +57,20 @@ The design should use separate **high-current servo return routing** and **signa
 Conceptually:
 
 ```text
-                         12 V BATTERY
-                              |
-                              v
-                        12 V -> 5 V BUCK
-                              |
-                +-------------+-------------+
-                |                           |
-                v                           v
-          SERVO POWER                    ESP32 VIN
-                |                           |
-          SERVO DRIVER                 onboard 3.3 V
-                |                           |
-        +-------+-------+              +----+----+
-        |       |       |              |         |
-      Servo1  Servo2  Servo3         ESP32     MyoWare
-                                                  |
-                                                 ENV
+                 BATTERY / TEST SOURCE (TBD)
+                     |                 |
+                     v                 v
+             LM2596-BASED BUCK    ESP32 POWER INPUT
+                     |                 TBD / USB DURING DEVELOPMENT
+                     v                 |
+          APPROXIMATELY 5 V            v
+          SERVO POWER RAIL            ESP32
+                     |                 |
+           PCA9685-BASED BOARD     onboard 3.3 V
+                     |                 |
+           +---------+---------+       +------ MyoWare
+           |         |         |                  |
+         Servo1    Servo2    Servo3              ENV
                                                   |
                                                   v
                                               ADC1 pin
@@ -82,7 +78,8 @@ Conceptually:
 
 Return-current routing should prevent high servo currents from flowing through the same physical ground path used as the MyoWare/ADC reference.
 
-The final power design must be validated using the exact battery, buck converter, servo driver, wiring, and MG90S units.
+The final power design must be validated using the exact battery, buck module,
+PCA9685 breakout board, ESP32 power path, wiring, and MG90S units.
 
 ---
 
@@ -637,12 +634,12 @@ Include:
 
 | Load | Voltage | Typical Current | Peak/Stall Current | Source |
 |---|---:|---:|---:|---|
-| ESP32 DevKit V1 | 5 V input | TBD | TBD | buck |
+| ESP32 DevKit V1 | Input path TBD | TBD | TBD | TBD; USB during development |
 | MyoWare 2.0 | 3.3 V | TBD | TBD | ESP32 3.3 V |
 | MG90S #1 | ~5 V | TBD | verify | buck |
 | MG90S #2 | ~5 V | TBD | verify | buck |
 | MG90S #3 | ~5 V | TBD | verify | buck |
-| Servo driver | TBD | TBD | TBD | TBD |
+| PCA9685-based servo controller | Logic/servo supplies depend on breakout | TBD | TBD | Exact breakout TBD |
 
 The final buck converter must be sized using measured or verified peak current, not average current alone.
 
@@ -1014,7 +1011,7 @@ Acceptance:
 ## Milestone 4 — Single Servo Control
 
 Goals:
-- select/finalize servo driver
+- identify/finalize the PCA9685 breakout implementation
 - command one MG90S
 - establish safe pulse/angle limits
 - verify power rail behavior
@@ -1100,7 +1097,7 @@ Goals:
 
 Do not let Codex invent these. They require hardware/mechanical decisions or testing.
 
-- exact servo driver board
+- exact PCA9685 breakout board
 - exact battery chemistry/capacity
 - exact buck converter part/module
 - verified MG90S current draw for the units used

@@ -1,22 +1,28 @@
 # Power budget
 
-The planned 12 V battery feeds an approximately 5 V buck converter. The 5 V
-rail supplies the ESP32 VIN/5V input and the servo power rail. The ESP32 3.3 V
-rail supplies the MyoWare 2.0. All current figures require measurement or
-verified part documentation.
+The final battery is TBD. An LM2596-based buck converter is planned for the
+approximately 5 V servo rail. The exact converter module must be identified
+and verified.
+
+The ESP32 power-input path is also TBD. The available DOIT board reference
+recommends 7–12 V for external `VIN` operation and does not establish the
+approximately 5 V servo rail as a supported `VIN` source. USB may power the
+ESP32 during development. The ESP32 3.3 V rail supplies the MyoWare 2.0.
+All current figures require measurement or verified part documentation.
 
 | Load | Planned supply | Typical current | Peak/stall current |
 | --- | --- | --- | --- |
-| ESP32 DOIT DevKit V1 | 5 V input | TBD | TBD |
+| ESP32 DOIT DevKit V1 | Input path TBD; USB during development | TBD | TBD |
 | MyoWare 2.0 | ESP32 3.3 V | TBD | TBD |
 | MG90S #1 | Approximately 5 V | TBD | TBD |
 | MG90S #2 | Approximately 5 V | TBD | TBD |
 | MG90S #3 | Approximately 5 V | TBD | TBD |
-| External servo driver | TBD | TBD | TBD |
+| PCA9685-based controller | Supplies depend on exact breakout | TBD | TBD |
 
-TODO: Record exact battery and buck parts, protection/fuse choice, wire and
-connector ratings, bulk capacitance, regulator temperature, and measured 5 V
-droop during servo startup/motion and carefully controlled stall tests.
+TODO: Record the exact battery, buck module, PCA9685 breakout, supported ESP32
+power path, protection/fuse choice, wire and connector ratings, bulk
+capacitance, regulator temperature, and measured servo-rail droop during
+startup/motion and carefully controlled stall tests.
 Size the buck from verified peak load, not average load alone.
 
 ## Battery

@@ -75,10 +75,14 @@ Known hardware:
 - MyoWare 2.0 EMG sensor
 - MyoWare ENV output for the initial implementation
 - approximately three MG90S servos
-- external servo driver
-- 12 V battery
-- 12 V → approximately 5 V buck converter
+- PCA9685-based external servo controller; exact breakout TBD
+- final battery TBD
+- LM2596-based buck converter planned for the approximately 5 V servo rail;
+  exact module TBD
 - MyoWare powered from the ESP32 3.3 V rail
+
+The ESP32 power-input path remains TBD. Do not assume that the approximately
+5 V servo rail is a supported input to the DOIT DevKit `VIN` pin.
 
 Do not invent hardware specifications.
 
