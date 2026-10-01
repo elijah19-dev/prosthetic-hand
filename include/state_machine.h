@@ -2,5 +2,16 @@
 
 #include "system_types.h"
 
-// TODO: Define command/state transition interface after startup, stop,
-// interruption, motion-complete, and fault behavior are agreed.
+class HandStateMachine
+{
+public:
+    void update(HandCommand command, bool targetReached, FaultCode fault);
+    HandState state() const { return state_; }
+    FaultCode fault() const { return fault_; }
+    bool enabled() const;
+    float target() const;
+
+private:
+    HandState state_ = HandState::STARTUP;
+    FaultCode fault_ = FaultCode::NONE;
+};

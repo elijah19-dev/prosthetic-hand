@@ -1,4 +1,5 @@
 #include "emg_sensor.h"
+#include "config.h"
 
 // Constructor
 EMGSensor::EMGSensor(uint8_t pin)
@@ -13,7 +14,7 @@ void EMGSensor::begin()
 
     // ESP32 ADC uses 12-bit resolution:
     // 0 to 4095
-    analogReadResolution(12);
+    analogReadResolution(EMG_ADC_BITS);
 
     // Increase measurable voltage range for the ADC input.
     analogSetPinAttenuation(pin_, ADC_11db);
