@@ -17,6 +17,19 @@ Record parts, wiring, instruments, observations, and results for each run.
 - Observe MyoWare ENV while servos move and with carefully controlled load.
 - Verify return routing keeps servo current away from the ADC reference path.
 
+## PCA9685 communication-only gate
+
+- Leave V+, the terminal block, and all servo headers unconnected.
+- Power PCA9685 VCC from ESP32 3.3 V and connect the logic grounds.
+- Connect SDA to GPIO 21 and SCL to GPIO 22.
+- Hold OE HIGH at ESP32 3.3 V so PWM outputs remain disabled.
+- Run `test/test_servo_communication` and require an ACK at expected address
+  `0x40` with Wire status zero.
+- Treat an ACK only as confirmation of I2C communication. It does not verify
+  PWM output, servo power, channel mapping, or safe mechanical motion.
+- Do not proceed to motion testing after any NACK, bus error, reset, unexpected
+  heating, or unstable logic supply.
+
 ## Servos
 
 - Select the driver and verify one-servo movement before three-servo operation.

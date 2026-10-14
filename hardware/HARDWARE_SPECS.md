@@ -301,10 +301,13 @@ The separate DOIT board-level reference lists three I2Cs in its device summary. 
 The PCA9685 servo controller is intended to communicate with the ESP32 over I2C.
 
 ### Planned I2C pins
-- SDA: **TBD**
-- SCL: **TBD**
+- SDA: **GPIO 21**
+- SCL: **GPIO 22**
 
-Do not assign final pins until the complete board pinout and system requirements are reviewed.
+These are the Arduino-ESP32 default I2C pins. They are bidirectional GPIOs,
+are not ESP32 boot-strapping pins, and do not conflict with the planned GPIO
+34 ADC1 EMG input. The assignments are also recorded in `include/config.h`
+and `docs/pinout.md`.
 
 ---
 
@@ -1023,7 +1026,8 @@ ESP32 I2C
 
 Status:
 - I2C architecture selected,
-- final GPIO assignments TBD,
+- SDA assigned to GPIO 21,
+- SCL assigned to GPIO 22,
 - breakout-board electrical details TBD.
 
 ---

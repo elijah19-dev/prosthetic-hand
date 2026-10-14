@@ -1,6 +1,8 @@
 # System architecture
 
-Status: acquisition prototype; the remaining firmware layers are scaffolds.
+Status: acquisition/normalization prototype with hardware-independent
+contraction-event classification and requested-target state logic. Servo and
+safety integration remain scaffolds.
 
 ## Electrical and power flow
 
@@ -28,8 +30,21 @@ MyoWare ENV → `emg_sensor` → `emg_processing` → `command_classifier` →
 
 `calibration` supplies user/session parameters to processing. `safety_manager`
 will supervise faults and stop behavior. `main.cpp` coordinates the modules.
-The current firmware only reads and prints ADC data; downstream modules do
-not command motion yet.
+`command_classifier` emits one `TOGGLE` event after a caller-configured
+contraction interval and will not rearm until a caller-configured release.
+Invalid EMG cannot create an event or count as a release. `state_machine`
+converts that event into an OPEN/CLOSED requested target after the caller
+explicitly supplies the startup target. The target is commanded state, not
+position feedback or confirmation of physical movement.
+
+STOPPED and FAULT revoke the requested target and reject further commands.
+They do not choose a fallback hand pose; fault recovery and mechanically safe
+stop behavior remain TBD.
+
+`main.cpp` still only reads and prints ADC data. The pure-logic modules are
+intentionally not connected to servo output while thresholds, startup target,
+stop behavior, breakout wiring, mechanical limits, and power behavior remain
+unverified.
 
 TODO: Agree on startup, loss-of-signal, fault, and recovery behavior with the
 mechanical and electrical design before enabling servo control.

@@ -1,9 +1,37 @@
 #pragma once
 
+#include <cstdint>
+
 // Semantic types shared between firmware layers. No GPIO or driver types belong here.
-enum class HandCommand { NONE, OPEN, CLOSE };
-enum class HandState { STARTUP, OPEN, OPENING, CLOSED, CLOSING, STOPPED, FAULT };
-enum class FaultCode { NONE, INVALID_EMG, SERVO_COMMUNICATION };
+enum class HandCommand : std::uint8_t
+{
+    NONE,
+    TOGGLE
+};
+
+// A target is a request sent toward the actuator layer, not confirmation that
+// the mechanism physically reached that position.
+enum class HandTarget : std::uint8_t
+{
+    UNSET,
+    OPEN,
+    CLOSED
+};
+
+enum class HandState : std::uint8_t
+{
+    STARTUP,
+    ACTIVE,
+    STOPPED,
+    FAULT
+};
+
+enum class FaultCode : std::uint8_t
+{
+    NONE,
+    INVALID_EMG,
+    SERVO_COMMUNICATION
+};
 
 struct EMGProcessed
 {

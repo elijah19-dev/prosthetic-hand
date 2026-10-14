@@ -618,8 +618,8 @@ Example:
 | Device | Signal | ESP32 Pin | Notes |
 |---|---|---:|---|
 | MyoWare 2.0 | ENV | GPIO 34 | ADC1 |
-| Servo Driver | SDA | TBD | I2C |
-| Servo Driver | SCL | TBD | I2C |
+| Servo Driver | SDA | GPIO 21 | I2C; Arduino-ESP32 default SDA |
+| Servo Driver | SCL | GPIO 22 | I2C; Arduino-ESP32 default SCL |
 | Calibration Button | Signal | TBD | Optional |
 
 Update this whenever wiring changes.

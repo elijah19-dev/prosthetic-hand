@@ -2,6 +2,8 @@
 #include "config.h"
 #include "emg_sensor.h"
 
+#ifndef UNIT_TEST
+
 // create myoware sensor object
 EMGSensor emgSensor(EMG_PIN);
 
@@ -18,7 +20,7 @@ void setup() {
 
 void loop() {
 
-int rawValue = emgSensor.readRaw();
+    int rawValue = emgSensor.readRaw();
     uint32_t milliVolts = emgSensor.readMilliVolts();
 
     Serial.print("Raw ADC: ");
@@ -32,3 +34,5 @@ int rawValue = emgSensor.readRaw();
     delay(100);
 
 }
+
+#endif // UNIT_TEST
